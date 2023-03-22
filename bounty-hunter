@@ -29,10 +29,14 @@ class BountyHunter:
         return f"The 'dir_template' has successful been copied to '{self.destination_directory}'."
 
     def find_md_files(self):
+        extensions = [
+            '.md',
+            '.sh'
+        ]
         for root, dirs, files in os.walk(self.destination_directory):
             for file in files:
                 filename, file_extension = os.path.splitext(file)
-                if file_extension == '.md':
+                if file_extension in extensions:
                     self.md_files.append(f"{root}/{file}")
 
         return self.md_files
