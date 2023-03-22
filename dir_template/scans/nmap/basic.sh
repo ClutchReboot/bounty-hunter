@@ -2,4 +2,4 @@
 export TARGET="{{TARGET}}"
 
 # Basic Scan
-sudo nmap -oN basic.nmap -Pn -sV -A $TARGET
+sudo nmap $TARGET -oN basic.nmap -Pn -sV -sC
