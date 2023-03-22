@@ -46,7 +46,7 @@ class BountyHunter:
             data = tools.read_file(file=file)
             data = data.replace("{{TARGET}}", f"{self.name.lower()}.htb")
             data = data.replace("{{TARGET_IP}}", f"{self.ip}")
-            data = data.replace("{{QUICK_DIR}}", f"alias {self.name.upper()}.HTB='cd {self.destination_directory}'")
+            data = data.replace("{{QUICK_DIR}}", f"alias {self.name.lower()}.htb='cd {self.destination_directory}'")
             tools.write_file(file=file, data=data)
 
     def main(self):
