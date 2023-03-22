@@ -5,7 +5,8 @@
 {{TARGET_IP}} {{TARGET}}
 ```
  
- ### Set Aliases
- ```bash
-{{QUICK_DIR}}
- ```
+### Set Aliases
+```bash
+echo "{{QUICK_DIR}}" >> ~/.bash_aliases
+source ~/.profile
+```
