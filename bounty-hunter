@@ -2,14 +2,15 @@
 import argparse
 import os
 import shutil
+import socket
 
 from utils import tools
 
 
 class BountyHunter:
-    def __init__(self, name: str, ip: str):
+    def __init__(self, name: str, remote_ip: str):
         self.name = tools.sanitize_file_name(file=name)
-        self.ip = tools.sanitize_ipv4(ip=ip)
+        self.remote_ip = tools.sanitize_ipv4(ip=remote_ip)
 
         self.home = os.environ['HOME']
         self.cwd = os.getcwd()
@@ -18,6 +19,7 @@ class BountyHunter:
         self.destination_directory = os.path.abspath(self.name)
 
         self.md_files = list()
+        self.local_ip = str()
 
     def copy_dir_template(self):
         """
@@ -41,15 +43,23 @@ class BountyHunter:
 
         return self.md_files
 
+    def get_local_ip(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect((self.remote_ip, 0)) 
+        self.local_ip = s.getsockname()[0]
+        return self.local_ip
+
     def replace_template_variables(self):
         for file in self.md_files:
             data = tools.read_file(file=file)
             data = data.replace("{{TARGET}}", f"{self.name.lower()}.htb")
-            data = data.replace("{{TARGET_IP}}", f"{self.ip}")
+            data = data.replace("{{RHOST}}", f"{self.remote_ip}")
+            data = data.replace("{{LHOST}}", f"{self.local_ip}")
             data = data.replace("{{QUICK_DIR}}", f"alias {self.name.lower()}.htb='cd {self.destination_directory}'")
             tools.write_file(file=file, data=data)
 
     def main(self):
+        self.get_local_ip()
         self.copy_dir_template()
         self.find_md_files()
         self.replace_template_variables()

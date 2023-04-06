@@ -1,4 +1,4 @@
-## Hydra
+# Hydra
 
 ### Default Credentials
 ```bash
