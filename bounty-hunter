@@ -72,5 +72,5 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    x = BountyHunter(name=args.name, ip=args.ip)
+    x = BountyHunter(name=args.name, remote_ip=args.ip)
     x.main()
